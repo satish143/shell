@@ -1,0 +1,531 @@
+What is a shell ?
+	It is a small program, which helps a user to interact with OS
+
+What are the types ?
+
+	/bin/sh		( bourne )
+	/bin/bash	( bourne adv )
+	/bin/csh	c-shell
+	/bin/tcsh	c advance
+	/bin/ksh	korn shell
+	/bin/zsh	zee shell
+
+What is the differece between these shell?
+
+	Syntax is the difference
+
+
+	# bash
+
+	if [ condition ]; then
+		#code block
+		command1
+		command2
+	fi
+
+	# c-shell
+
+	if ( condition ) {
+		#code block
+		command1
+		command2
+	}
+
+
+Why we need use a shell script ?
+
+	To automate, OS leve jobs
+		1. To create multiple user at once
+		2. Backup Activities
+		
+
+What should be my shell script extension ?
+
+	myscript.sh	<--- recommended extention
+
+	myscript.bash
+	myscript.tcsh
+
+	myscript.pl	<-- perl
+	myscript.py	<-- python	
+	myscript.rb	<-- ruby
+
+	myscript	<-- script without extention are valid
+
+How to run my script ?
+
+	Method I)
+			/bin/bash myscript.sh	<-- use of shell itself
+
+	Method II)
+			Full path method
+			/home/devops/training/scripts/myscript.sh
+			
+			Note: MUST have the executable permission on the script
+				chmod +x  myscript.sh
+
+	Method III)
+			Short path
+			
+			cd /home/devops/training/scripts
+			./myscript.sh
+
+			Note: MUST have the executable permission on the script
+				chmod +x  myscript.sh
+			    OR  chmod 755 myscript.sh
+
+
+What will be my first line of my script ?
+
+	#! <-- shebang
+
+	#!/path/shell
+
+		#!/bin/bash		#!/bin/tcsh
+
+		line1 <--bash syntax	line1	<-- code with tcsh syntax
+		line2			line2
+
+	
+	#bash				#csh
+					   load the bash
+						execute the script in bash
+					   unload the bash
+					#csh
+
+What can be my next lines ?
+
+	#!/bin/bash	<-- Ist line is special line
+	#!/bin/csh	<-- from second line if line start with # is treated as
+				comment
+
+	
+
+What template we need to go ?
+
+
+
+
+Executed the shell script with 3 methods
+
+Shell Variables
+---------------
+
+
+what is a variable ?
+
+	It is a label given to a memory location, which holds some value.
+
+	VERSION=9
+
+	VERSION is a variable name
+	9       is the value of the variable
+
+What are the different types ?
+
+	1. System Variables		PATH, HOME, SHELL
+	2. User Defined			AGE, NAME
+	3. Shell Variables		$?, $0
+
+How to define a variable ?
+
+	VARNAME=value	<-- correct
+
+	VARNAME= value	<-- not correct
+	VARNAME =value  <-- not valid
+	VARNAME = value <-- illegal 
+
+How to define a variable on command line ?
+
+	export VARNAME=value
+
+How to define a variable in script ?
+ 
+	VARNAME=value
+
+
+How to see the list of variables ?
+
+	env | less   OR env  | more
+
+
+What is the life of the variable ?
+
+	In script:
+		    life start at start of script
+		    life ends at end of script
+
+	Command:    life is till the session
+
+
+How to make the variable permanent ?
+
+		/home/<user>/.bash_profile
+
+How to see individual variables ?
+
+	echo $VARNAME
+
+	e.g. 	echo $COMPNAME
+		echo $PATH
+		echo $HISTSIZE
+		echo $SHELL
+
+How to reset/remove the variable ?
+
+	unset VARNAME
+
+	e.g unset COMPNAME
+
+
+How I can name my variables ?
+
+	COMPNAME=lync
+	_COMPNAME=ACCENTURE
+	COMP_NAME=ibm
+	COMPNAME1=infosys
+	compname=netenrich
+
+
+	COMP@NAME=not valid
+	!COMPNAME=illegal
+	1COMPNAME=not permitted
+
+Note: Try to use variable in CAP letters
+
+	key-words:	if, then, when, until
+	command:	cat, ls 
+	
+
+
+single quote, double quote and back tick
+
+
+	COMMAND=/bin/ls
+
+
+
+	echo '$COMMAND'
+		It will print exact same string which are in single quotes
+	output->	$COMMAND
+
+	echo "$COMMAND"
+		It will evaluate the value of variable and print it
+	output->	/bin/ls		
+
+	
+	echo `$COMMAND`
+		It will not only evaluate, but also execte it as command
+	output->	output of /bin/ls
+
+
+
+	/bin/bash ---> `/bin/sh`
+
+
+
+IF Statment:
+------------
+	
+Syntax I)
+
+	if [ condition ]; then
+	  # Execute this block if the condition is True
+	  command1
+	  command2
+	  ...
+	  commandN
+	fi	<--- this is not a typo
+
+Syntax II)
+
+	if [ condition ];
+	then
+	  # Execute this block if the condition is True
+	  command1
+	  command2
+	  ...
+	  commandN
+	fi	<--- this is not a typo
+
+Syntax III)
+
+	if [ condition ]; then
+	  # Execute this block if the condition is True
+	  command1
+	  command2
+	  ...
+	  commandN
+	else
+	  # Execute this block if the condition is False
+	  command1
+	  command2
+	  ...
+	  commandM
+	fi	<-- this is not a typo
+	  	
+Syntax IV)
+
+	if [ condition ]; then
+	   # Execute this when True
+	   command1
+	   command2
+	elif	<-- This is not a typo
+	   # Execute this when True
+	   command3
+	   command4
+	elif
+	   # Execute this when True
+	   command5
+	   command6
+	else
+	   # Execute this if all above Fails
+	   command7
+	   command8
+	fi	<-- This is not a typo	
+
+
+
+
+condition is an expression which always result in either True or False
+
+	1. File Test Condition
+	2. Number Test Condition
+	3. String Test Condition
+	4. Logical Test Condition
+
+
+	I) File Test
+
+		-f	to check the file exists
+		-d	to check the directory exists
+		-r	to check the file/dir has read permission
+		-w	to check the file/dir has write permission
+		-x	to check the file/dir has execute permission
+		-s	to check the file size is more that zero bytes
+		
+
+	II) Number Test
+
+	    Normal Way		Shell
+		=		-eq
+		>		-gt
+		<		-lt
+		>=		-ge
+		<=		-le
+		!=		-ne
+
+
+	  MARKS=60
+
+	  65 > First Class
+	  55 > Second Class
+	  45 > Third Class
+	       Student Fail 
+
+
+		0	  1	2  .....  9
+	  numbertest.sh  arg1 arg2 ..... arg9
+		
+		$0	  $1	$2	  $9
+	
+
+
+
+	3) String Test
+
+		string1 == string2 	equals to
+		string2 != string2 	not equals to 
+
+
+	4) Logical Test
+
+		
+	   AND			  ( -a )
+	A	B	OUTPUT	
+	----------------------
+	F	F	F
+	T	F	F
+	F	T	F
+	T	T	T   
+
+	   OR			 ( -o )
+	A	B	OUTPUT	
+	----------------------
+	F	F	F
+	T	F	T
+	F	T	T
+	T	T	T   
+
+
+	   NOT			( ! )
+	A	OUTPUT
+	--------------
+	F	T
+	T	F	
+
+Bash Scripting ( variables, if tests and more )
+--------------
+
+User Creation
+-------------
+
+	1. Username and Password
+	2. Super user privileges
+	3. If the user is already exists, do not create the user
+	4. Give a user a sudo access
+	5. Force user to reset his password at first login ( homework )
+
+
+
+When a command get executed what happens ?
+
+	It will store its exit status in special variable $?
+
+	$? = 0 , the command is successfully executed
+	$? != 0, then command is failed
+
+
+
+	Type		Devices		Number
+	----		-------		------
+
+	STDIN		Keyboard	0
+	STDOUT		Screen		1
+	STDERR		Screen		2
+
+
+
+	> or >> are called redirector symbols
+
+	>	it will push the output to specified file
+		if the outputfile is already exists, it will overwrite
+		if the outputfile is not exists, it will create it
+
+
+	>>	it will push the output to specified file
+		if the outputfile is already exists, it will append
+		if the outputfile is not exists, it will create it
+Case Statement
+--------------
+
+Syntax:
+
+   RHEL/CentOS	 yum update -y
+   Debain/Ubuntu apt-get update -y
+   Solaris	 package
+   
+
+case VARNAME in 
+	   Choice1)
+		   command1
+		   command2
+		   ;;	
+	   Choice2)
+		   command3
+		   command4
+		   ;;	
+	   Choice3)
+		   command5
+		   command6
+		   ;;	
+	   *)
+		   command7
+		   command8
+		   ;;
+esac	<-- this is not a typo
+
+Homework:
+	Implement the case script with if elif elif else fi
+
+
+
+Loops:
+-----
+	Repetations of a give task again and again
+
+	for   loop
+	while loop
+	until loop
+
+
+Syntax for
+---------
+
+	for VARNAME in LIST
+        do
+          #Block of code
+	done
+
+
+	for NUM in {1..10}
+	do
+	  echo "The NUM is $NUM"
+	done
+
+	for NAME in user01 user02 user03
+	do
+	  echo "The name is $NAME"
+        done
+
+	for NUM in `seq -w 1 1 100`
+        do
+         echo "The NUM is $NUM"
+        done
+
+	for USER in `cat user_list`
+        do
+	  echo "The USER name is $USER"
+        done
+
+
+
+WHILE LOOP
+----------
+
+Syntax
+
+	initialize condition
+	while [ condition check ]  #True
+	do
+          #Block of Code
+	  condition modifier
+        done
+
+
+
+
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

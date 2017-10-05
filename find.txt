@@ -1,0 +1,52 @@
+echo -e " enter file Or dircetory:\c"
+read name
+if [ -d $name ]
+  then
+    echo "$name is a dircetory "
+    echo -e "do u want to  view the contents of directory(y/n):\c"
+   read a
+    if [ $a = "y" ]
+         then
+        cd $name
+           ls
+     #find the emity files
+      for i in *
+      do
+         if [ -s $i ]
+           then
+              continue
+         else
+             echo "$i is emity file"
+          fi
+      done
+    fi
+elif [ -f $name ]
+  then
+     echo "$name is a file"
+     echo -e "view the content of data (y/n):\c"
+       read n
+        if [ $n = "y" ]
+          then
+          cat $name
+        fi
+     echo -e "do u want chang this file(y/n):\c"
+    read a
+     [ $a = "y" ]
+     if [ $? = 0 ]
+     then
+        if [ -w $name ]
+          then
+               cat >> $name
+          else
+           echo "we Can't write this file"
+        fi
+    fi
+else
+  echo "$name file or directory not there"
+ echo -e "create this file $name(y/n):\c"
+    read a
+      if [ $a = y ]
+        then
+          touch $name
+      fi
+fi
