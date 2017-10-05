@@ -54,21 +54,23 @@ if [ $? -ne 0 ]; then
 fi
 
 # Adding the user in super user group
+echo -e " if u want to grant super user privilege [y/n]: \c";
+read n;
+if [ $n == y -o $n == Y ]; then
 
-/usr/sbin/usermod -G wheel $MYUSER
-if [ $? -ne 0 ]; then
-  echo "Some problem in adding user $MYUSER in wheel group"
-  exit 6
+	/usr/sbin/usermod -G wheel $MYUSER
+	if [ $? -ne 0 ]; then
+	  echo "Some problem in adding user $MYUSER in wheel group"
+	  exit 6
+	fi
 fi
-
 
 echo "The user $MYUSER created Successfully!!!"
 #exit 0 # This line is optional
 
-echo "when user login password should chang "
-echo -e "user login (y/n):\c"
-read n
-if [ $n == y -o $n == Y ] ; then
-/usr/bin/su - $MYUSER
-/usr/bin/chage -I $MYUSER
+echo -e "when user login password should chang[y/n]:\c "
+read a;
+if [ $a == y -o $a == Y ]; then
+   passwd -e $MYUSER ;
 fi
+echo "Thinks "
